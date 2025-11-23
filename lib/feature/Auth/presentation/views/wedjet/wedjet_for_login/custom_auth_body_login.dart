@@ -28,8 +28,8 @@ class _LoginScreenState extends State<customauthbodyLogin> {
             children: [
             CustomHeader(
               topPadding: 100,
-  title: 'Log In',
-  subtitle: 'Enter your email and password to securely access your account and manage your services.',
+  title: 'تسجيل دخول',
+  subtitle: 'قم بادخال كلمة السر وبريدك الالكتروني لضمان سرية بياناتك والدخول بأمان ',
 ),        
 bodysection(),
                 

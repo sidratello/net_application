@@ -30,8 +30,8 @@ class _LoginScreenState extends State<customauthbodySignUp> {
             children: [
 
           CustomHeader(
-  title: 'Create Account',
-  subtitle: 'Enter your information to create a new account and get started.',
+  title: 'انشاء حساب',
+  subtitle:'قم بادخال  بياناتك من أجل انشاء حساب والبدء بتقديم شكوى ',
 ),
 
      

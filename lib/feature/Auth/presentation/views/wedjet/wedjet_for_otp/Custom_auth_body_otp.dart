@@ -36,8 +36,8 @@ class _LoginScreenState extends State<customauthbodyOtp> {
                 },
               ),
             CustomHeader(
-  title: 'Very Fay OTP',
-  subtitle: 'Enter the OTP sent to your email to verify your identity and continue securely.',
+  title: "التحقق من البريد الإلكتروني",
+  subtitle: 'لقد أرسلنا رمز التحقق إلى بريدك الإلكتروني. أدخل الرمز المكون من 6 أرقام للمتابعة.',
 ),        
 BodySectionOtp(),
                 

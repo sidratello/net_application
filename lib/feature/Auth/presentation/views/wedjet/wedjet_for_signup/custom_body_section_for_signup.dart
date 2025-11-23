@@ -54,7 +54,7 @@ bool _confirmPasswordVisible = false;
                                       AppTextField(
                                          controller: nameController, 
                                          validator: validateUsername,
-            hint: 'Name',
+            hint: 'الاسم كامل',
             background: Colors.white,
             keyboardType: TextInputType.emailAddress,
             prefix: const Icon(Icons.person_2_outlined,
@@ -69,7 +69,7 @@ bool _confirmPasswordVisible = false;
                                      keyboardType: TextInputType.emailAddress,
                                        controller: emailController,
                                        validator: validateEmail,
-            hint: 'Email address',
+            hint: 'عنوان البريد الالكتروني',
             background: Colors.white,
           
             prefix: const Icon(Icons.email_outlined,
@@ -83,7 +83,7 @@ bool _confirmPasswordVisible = false;
                                   AppTextField(
                                     controller: passwordController, 
                                     validator:validatePassword ,
-            hint: 'Password',
+            hint: 'كلمة السر',
             background: Colors.white,
                    keyboardType: TextInputType.emailAddress,
            obscure: !_passwordVisible, 
@@ -104,7 +104,7 @@ bool _confirmPasswordVisible = false;
                                           controller: confirmPasswordController,
                                           validator: (value) =>
                   validateConfirmPassword(value, passwordController.text),
-            hint: 'Confirm Password',
+            hint: 'تأكيد كلمة السر ',
             background: Colors.white,
                    keyboardType: TextInputType.emailAddress,
              obscure: !_confirmPasswordVisible,
@@ -139,7 +139,7 @@ bool _confirmPasswordVisible = false;
 
           },
           child: AppButton(
-            text: "Create Account",
+            text: "انشاء جساب",
             onPressed: () {
                 if (_formKey.currentState!.validate()) {
         context.read<SignupCubit>().fetchDataSignup(
@@ -165,23 +165,23 @@ bool _confirmPasswordVisible = false;
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children:  [
-                                      Text(
-                                        "Already have an account?  ",
-                                        style: styles.textStyle14,
-                                      ),
+                                    
         GestureDetector(
           onTap: () {
             context.go(AppRouter.kloginView);
           },
           child: Text(
-            'Sign in here',
+            'سجل دخول هنا  ',
             style: styles.textStyle14.copyWith(
         color: Color.fromARGB(255, 88, 138, 106),
         fontWeight: FontWeight.bold,
             ),
           ),
         ),
-        
+          Text(
+                              "لديك حساب بالفعل",
+                                        style: styles.textStyle14,
+                                      ),
                                     ],
                               
                                   ),

@@ -26,13 +26,13 @@ class customsuccessotp extends StatelessWidget {
              
                
              CustomHeader(
-               title: "Verification Successful!",
-               subtitle: "Your email has been verified successfully." ,
+               title:     " 🎉 تم التحقق بنجاح    ",
+               subtitle: "تم تأكيد بريدك الإلكتروني بنجاح يمكنك الآن تسجيل الدخول إلى حسابك." ,
                topPadding: 30,
              
              ),
              const SizedBox(height: 10),
-             AppButton(text:     "Continue", onPressed: () {
+             AppButton(text:     "اكمال ", onPressed: () {
                      context.go(AppRouter.kloginView);
                },
              

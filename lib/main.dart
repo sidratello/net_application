@@ -26,7 +26,7 @@ void main() async {
     final sp = await  SharedPreferences.getInstance();
   final savedToken = sp.getString('token');
   if (savedToken != null && savedToken.isNotEmpty) {
-    // 3) نبدأ اتصال SignalR باستخدام آخر توكن موجود
+    print("😊$savedToken");
     await getIt<NotificationService>().startConnection(savedToken);
   }
 

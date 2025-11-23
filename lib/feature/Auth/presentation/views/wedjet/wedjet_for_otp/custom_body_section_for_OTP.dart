@@ -45,7 +45,7 @@ class _BodySectionOtpState extends State<BodySectionOtp> {
                                        keyboardType: TextInputType.emailAddress,
                                          controller: emailController,
                                          validator: validateEmail,
-              hint: 'Email address',
+              hint: 'عنوان البريد الالكتروني',
               background: Colors.white,
             
               prefix: const Icon(Icons.email_outlined,
@@ -113,7 +113,7 @@ class _BodySectionOtpState extends State<BodySectionOtp> {
   }
 },
 
-          text: 'Continue',
+          text: 'تأكيد ',
        ),
     );
   },

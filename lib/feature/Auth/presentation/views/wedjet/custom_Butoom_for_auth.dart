@@ -3,7 +3,7 @@ import 'package:net_aplecation/core/units/styles.dart';
 
 class AppButton extends StatelessWidget {
   final String text;                 // نص الزر
-  final VoidCallback onPressed;      // حدث الضغط
+  final VoidCallback? onPressed;      // حدث الضغط
   final Color color;                 // لون الخلفية
   final TextStyle? textStyle;        // ستايل النص
   final double height;               // ارتفاع الزر

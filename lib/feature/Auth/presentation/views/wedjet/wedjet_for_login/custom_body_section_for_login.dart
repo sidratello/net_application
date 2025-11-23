@@ -2,17 +2,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:net_aplecation/core/function/counter_function_for_login.dart';
 import 'package:net_aplecation/core/units/app_Router.dart';
-import 'package:net_aplecation/core/units/server_locater.dart';
+
 import 'package:net_aplecation/core/units/styles.dart';
 import 'package:net_aplecation/core/validation.dart';
 import 'package:net_aplecation/feature/Auth/presentation/manager/logincubit/login_cubit.dart';
-import 'package:net_aplecation/feature/Auth/presentation/views/custom_snack.dart';
+
 
 import 'package:net_aplecation/feature/Auth/presentation/views/wedjet/custom_Butoom_for_auth.dart';
 import 'package:net_aplecation/feature/Auth/presentation/views/wedjet/custom_text_field.dart';
 import 'package:net_aplecation/feature/Auth/presentation/views/wedjet/wedjet_for_signup/custom_disapear_and_apear_icon.dart';
-import 'package:net_aplecation/singlr_servese.dart';
+import 'package:net_aplecation/local_notification.dart';
+
 class bodysection extends StatefulWidget {
   const bodysection({super.key});
 
@@ -25,11 +27,14 @@ class _bodysectionState extends State<bodysection> {
   final passwordController = TextEditingController();
     bool _passwordVisible = false;
     final _formKey = GlobalKey<FormState>();
+final LoginCooldownController cooldown = LoginCooldownController();
+
 
       @override
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
+      cooldown.dispose();
     super.dispose();
   }
 
@@ -50,7 +55,7 @@ class _bodysectionState extends State<bodysection> {
                                       AppTextField(
                                         controller: emailController,
                                         validator: validateEmail,
-            hint: 'Email address',
+            hint: 'عنوان البريد الالكتروني',
             background: Colors.white,
             keyboardType: TextInputType.emailAddress,
             prefix: const Icon(Icons.mail_outline_rounded,
@@ -66,7 +71,7 @@ class _bodysectionState extends State<bodysection> {
                             
                            
                                   AppTextField(
-            hint: 'Password',
+            hint: 'كلمة السر ',
                     controller: passwordController,
                                         validator: validatePassword,
             background: Colors.white,
@@ -97,6 +102,15 @@ class _bodysectionState extends State<bodysection> {
  BlocConsumer<LoginCubit, LoginState>(
                   listener: (context, state) async {
                     if (state is loginFailure) {
+
+  if (state.errMessage.contains('Account locked')) {
+    await LocalNotificationService().showNotification(
+      title: 'تم قفل الحساب',
+      body: state.errMessage, // أو نص عربي ثابت
+    );
+  }
+
+
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text(state.errMessage,
                         
@@ -107,10 +121,15 @@ class _bodysectionState extends State<bodysection> {
                         ),
                         
                       );
-//                       showBeautifulSnackBar(
-//   context,
-//   message: state.errMessage,
-// );
+  cooldown.startCooldown(
+    duration: 2,
+    onTick: () {
+      setState(() {});   // عشان يحدث النص على الزر
+    },
+    onFinish: () {
+      setState(() {});   // لما يخلص العد
+    },
+  );
 
                     }
 
@@ -129,21 +148,24 @@ class _bodysectionState extends State<bodysection> {
                         child: CircularProgressIndicator(),
                       );
                     }
-                    return 
+              
 
-                                  AppButton(
-          text: "LOG IN",
-          onPressed: () {
-               
-                if (_formKey.currentState!.validate()) {
-        context.read<LoginCubit>().fetchdatalogin(
-      
-          email: emailController.text.trim(),
-          password: passwordController.text.trim(),
-         
-        );
-          };
-          },);
+                             return AppButton(
+  text: cooldown.isCooldown
+      ? "انتظر ${cooldown.seconds} ثانية"
+      : "تسجيل الدخول",
+  onPressed: cooldown.isCooldown
+      ? null
+      : () {
+          if (_formKey.currentState!.validate()) {
+            context.read<LoginCubit>().fetchdatalogin(
+              email: emailController.text.trim(),
+              password: passwordController.text.trim(),
+            );
+          }
+        },
+);
+
         
                   },
  
@@ -159,29 +181,29 @@ class _bodysectionState extends State<bodysection> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children:  [
-                                      Text(
-                                        "Don't have an account?  ",
-                                        style: styles.textStyle14,
-                                      ),
+                            
         GestureDetector(
           onTap: () {
             context.go(AppRouter.ksignupView);
           },
           child: Text(
-            'Sign UP here',
+            '  قم بانشاء الحساب هنا ',
             style: styles.textStyle14.copyWith(
         color: Color.fromARGB(255, 88, 138, 106),
         fontWeight: FontWeight.bold,
             ),
           ),
         ),
-        
+                  Text(
+                                        "ليس لديك حساب؟  ",
+                                        style: styles.textStyle14,
+                                      ),
                                     ],
                               
                                   ),
                                                       
-                                                    
-                                        
+
+     
                                    
                                 ],
                               
