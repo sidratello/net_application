@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:net_aplecation/core/units/app_Router.dart';
 import 'package:net_aplecation/core/validation.dart';
 import 'package:net_aplecation/feature/Auth/presentation/manager/otpcubit/otp_cubit.dart';
+import 'package:net_aplecation/feature/Auth/presentation/manager/resendotpcubit/resendotp_cubit.dart';
 
 
 import 'package:net_aplecation/feature/Auth/presentation/views/wedjet/custom_Butoom_for_auth.dart';
@@ -100,7 +101,7 @@ class _BodySectionOtpState extends State<BodySectionOtp> {
  
 
  return       Padding(
-          padding: const EdgeInsets.all(40.0),
+          padding: const EdgeInsets.only(top: 40,right: 40,left: 40,bottom: 10),
           child: AppButton(
         onPressed: () {
   if (_formKey.currentState!.validate()) {
@@ -118,6 +119,42 @@ class _BodySectionOtpState extends State<BodySectionOtp> {
     );
   },
 ),
+
+
+BlocListener<ResendotpCubit, ResendotpState>(
+  listener: (context, state) {
+                     if (state is ResendotpFailure) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(state.errMessage)),
+                      );
+                    }
+
+                    if (state is ResendotpSuccess) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(state.message)),
+                      );
+                 
+                    }
+  },
+  child:  Padding(
+          padding: const EdgeInsets.only(top: 10,right: 40,left: 40,),
+          child: AppButton(
+        onPressed: () {
+  if (_formKey.currentState!.validate()) {
+   
+
+    context.read<ResendotpCubit>().fetchdataresendotp(
+  
+      email: emailController.text.trim(),
+    );
+  }
+},
+
+          text: 'اعادة ارسال رمز التحقق ',
+       ),
+    ),
+)
+
             ],
           ),
         ),

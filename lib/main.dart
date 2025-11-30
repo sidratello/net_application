@@ -2,17 +2,20 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:net_aplecation/core/units/app_Router.dart';
 import 'package:net_aplecation/core/units/server_locater.dart';
 import 'package:net_aplecation/feature/Auth/data/repos/auth_repo_imp.dart';
 import 'package:net_aplecation/feature/Auth/presentation/manager/logincubit/login_cubit.dart';
 import 'package:net_aplecation/feature/Auth/presentation/manager/otpcubit/otp_cubit.dart';
+import 'package:net_aplecation/feature/Auth/presentation/manager/resendotpcubit/resendotp_cubit.dart';
 
 import 'package:net_aplecation/feature/Auth/presentation/manager/signupcubit/signup_cubit.dart';
 import 'package:net_aplecation/local_notification.dart';
 import 'package:net_aplecation/singlr_servese.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 
 
 
@@ -53,6 +56,12 @@ class net_aplecation extends StatelessWidget {
             getIt.get<AuthRepoImpl>(),
           ),
         ),
+
+            BlocProvider(
+          create: (context) => ResendotpCubit(
+            getIt.get<AuthRepoImpl>(),
+          ),
+        ),
             BlocProvider(
       create: (context) => LoginCubit(
         getIt.get<AuthRepoImpl>(),
@@ -60,11 +69,24 @@ class net_aplecation extends StatelessWidget {
       ],
     
       child:
-      MaterialApp.router(
-    debugShowCheckedModeBanner: false,
-     routerConfig: AppRouter.router,
-      
-      ),
+MaterialApp.router(
+  debugShowCheckedModeBanner: false,
+  routerConfig: AppRouter.router,
+
+  locale: const Locale('ar'),
+  
+  supportedLocales: const [
+    Locale('ar'),
+    Locale('en'),
+  ],
+  localizationsDelegates: const [
+    GlobalMaterialLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+  ],
+
+)
+
     );
   }
 

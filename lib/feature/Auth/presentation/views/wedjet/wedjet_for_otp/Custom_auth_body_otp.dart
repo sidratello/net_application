@@ -32,7 +32,7 @@ class _LoginScreenState extends State<customauthbodyOtp> {
             children: [
                        CustomAppBar(
                 onTap:() {
-  context.go(AppRouter.ksignupView);
+  context.go(AppRouter.kloginView);
                 },
               ),
             CustomHeader(

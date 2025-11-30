@@ -63,6 +63,34 @@ class AuthRepoImpl implements AuthRepo {
     }
   }
   
+    
+      @override
+      Future<Either<Failure, Map<String, dynamic>>> fetchdataresendotp({required String Email}) async{
+     try {
+
+      final data = await api.post(
+        endPoint: 'resend-otp',             
+        body: {
+       
+          'Email':Email,
+        },
+      );
+
+
+      return right(data); 
+    }
+     on DioException catch (e) {
+      return left(ServerFailure.fromDioError(e)); 
+    } catch (e) {
+      return left(ServerFailure(e.toString()));
+    }
+      }
+
+
+
+
+
+
   @override
   Future<Either<Failure, Map<String, dynamic>>> fetchdatalogin({required password, required String Email}) async {
       try {
@@ -100,6 +128,7 @@ if (user != null) {
         return left(ServerFailure(e.toString()));
       }
     }
+
   }
   
 

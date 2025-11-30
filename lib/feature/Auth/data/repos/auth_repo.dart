@@ -18,6 +18,10 @@ abstract class AuthRepo {
      required String code,
       required String Email, });
 
+          Future<Either<Failure, Map<String, dynamic>>> fetchdataresendotp({
+
+      required String Email, });
+
           Future<Either<Failure, Map<String, dynamic>>> fetchdatalogin({
      required dynamic password,
       required String Email, });

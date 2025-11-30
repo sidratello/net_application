@@ -103,13 +103,23 @@ final LoginCooldownController cooldown = LoginCooldownController();
                   listener: (context, state) async {
                     if (state is loginFailure) {
 
-  if (state.errMessage.contains('Account locked')) {
-    await LocalNotificationService().showNotification(
-      title: 'تم قفل الحساب',
-      body: state.errMessage, // أو نص عربي ثابت
+ final msg = state.errMessage;
+
+  // حالة الإيميل غير مفعّل
+  if (msg.contains('Email not verified')) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('البريد غير مفعّل، يرجى إدخال رمز التحقق'),
+      ),
+    );
+
+    // ننتقل لشاشة OTP ونرسل معها الإيميل
+    context.go(
+      AppRouter.kOTPView, // مسار شاشة OTP
+      extra: emailController.text.trim(),
     );
   }
-
+  else{
 
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text(state.errMessage,
@@ -130,7 +140,7 @@ final LoginCooldownController cooldown = LoginCooldownController();
       setState(() {});   // لما يخلص العد
     },
   );
-
+  }
                     }
 
                     if (state is loginSuccess) {
@@ -150,6 +160,7 @@ final LoginCooldownController cooldown = LoginCooldownController();
                     }
               
 
+
                              return AppButton(
   text: cooldown.isCooldown
       ? "انتظر ${cooldown.seconds} ثانية"
@@ -165,7 +176,6 @@ final LoginCooldownController cooldown = LoginCooldownController();
           }
         },
 );
-
         
                   },
  
@@ -181,23 +191,23 @@ final LoginCooldownController cooldown = LoginCooldownController();
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children:  [
-                            
+                               Text(
+                                        "ليس لديك حساب؟  ",
+                                        style: styles.textStyle14,
+                                      ),
         GestureDetector(
           onTap: () {
             context.go(AppRouter.ksignupView);
           },
           child: Text(
-            '  قم بانشاء الحساب هنا ',
+            'قم بانشاء الحساب هنا ',
             style: styles.textStyle14.copyWith(
         color: Color.fromARGB(255, 88, 138, 106),
         fontWeight: FontWeight.bold,
             ),
           ),
         ),
-                  Text(
-                                        "ليس لديك حساب؟  ",
-                                        style: styles.textStyle14,
-                                      ),
+               
                                     ],
                               
                                   ),

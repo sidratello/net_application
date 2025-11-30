@@ -35,18 +35,25 @@ Future<void> startConnection(String token) async {
     print('✅ SignalR reconnected: $connectionId');
   });
 
-  _hubConnection.on('AccountLockedOut', (args) async {
-    final msg = (args != null && args.isNotEmpty)
-        ? args[0].toString()
-        : 'Your account has been locked.';
+_hubConnection.on('AccountLockedOut', (args) async {
+  if (args == null || args.isEmpty) return;
 
-    print('🔔 AccountLocked from SignalR: $msg');
+  // تحويل الرسالة القادمة من SignalR إلى Map
+  final data = args[0];
 
-    await LocalNotificationService().showNotification(
-      title: 'Account Locked',
-      body: msg,
-    );
-  });
+  // استخراج النص من "message"
+  final message = data is Map && data.containsKey('message')
+      ? data['message'].toString()
+      : args[0].toString();
+
+  print('🔔 AccountLocked from SignalR: $message');
+
+  await LocalNotificationService().showNotification(
+    title: 'Account Locked',
+    body: message, // فقط الرسالة
+  );
+});
+
 
   try {
     await _hubConnection.start();

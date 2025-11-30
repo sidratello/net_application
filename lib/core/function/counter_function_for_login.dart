@@ -6,13 +6,13 @@ class LoginCooldownController {
   bool isCooldown = false;
   Timer? _timer;
 
-  /// يبدأ العد التنازلي
+ 
   void startCooldown({
     required int duration,
-    required VoidCallback onTick,   // نوعها: void Function()
+    required VoidCallback onTick,  // نوعها: void Function()
     required VoidCallback onFinish, // نوعها: void Function()
   }) {
-    // لو فيه مؤقت سابق، نلغيه
+    
     _timer?.cancel();
 
     seconds = duration;
@@ -21,11 +21,11 @@ class LoginCooldownController {
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (seconds > 0) {
         seconds--;
-        onTick();        // نستدعي setState()
+        onTick();        
       } else {
         isCooldown = false;
         timer.cancel();
-        onFinish();      // نستدعي setState() في النهاية
+        onFinish();      
       }
     });
   }

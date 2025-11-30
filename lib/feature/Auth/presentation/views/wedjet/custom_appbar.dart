@@ -9,14 +9,13 @@ class CustomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Align(
-      alignment: Alignment.centerLeft,
+         alignment: Alignment.centerRight, 
       child:      GestureDetector(
-        onTap: () {
+        onTap: onTap ?? () {
+          // السلوك الافتراضي لو ما تم تمرير onTap من برّة
           if (context.canPop()) {
-            // لو فيه صفحة قبل نقدر نرجع لها
             context.pop();
-          } 
-        },
+          }},
         child: Container(
            margin: const EdgeInsets.only(top: 8, left: 12), // ↓ تقليل المساحة
           height: 25,          // ↓ كان 42 → الآن أصغر
@@ -25,10 +24,13 @@ class CustomAppBar extends StatelessWidget {
             color: const Color(0xFFEFEFEF), // اللون الرمادي اللي بالصورة
             shape: BoxShape.circle,
           ),
-          child: const Icon(
-            Icons.arrow_back_ios_new_rounded,
-            size: 20,
-            color: Colors.black87,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: const Icon(
+              Icons.arrow_back_ios_new_rounded,
+              size: 30,
+              color: Colors.black87,
+            ),
           ),
         ),
       ),

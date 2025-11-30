@@ -165,7 +165,12 @@ bool _confirmPasswordVisible = false;
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children:  [
-                                    
+
+                            Text(
+                              "لديك حساب بالفعل",
+                                        style: styles.textStyle14,
+                                      ), 
+                                      SizedBox(width: 10,),           
         GestureDetector(
           onTap: () {
             context.go(AppRouter.kloginView);
@@ -178,10 +183,7 @@ bool _confirmPasswordVisible = false;
             ),
           ),
         ),
-          Text(
-                              "لديك حساب بالفعل",
-                                        style: styles.textStyle14,
-                                      ),
+      
                                     ],
                               
                                   ),
