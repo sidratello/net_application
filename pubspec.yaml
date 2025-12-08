@@ -48,6 +48,8 @@ dependencies:
   signalr_core: ^1.1.1
   flutter_localizations:
     sdk: flutter
+  image_picker: ^1.0.0
+  file_selector: ^1.0.3
 
 dev_dependencies:
   flutter_test:
